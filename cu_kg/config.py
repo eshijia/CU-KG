@@ -3,6 +3,8 @@ import os
 
 
 class AppConfig(object):
+    DEBUG = False
+    TESTING = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'jiu bu gao su ni'
 
     @staticmethod
@@ -11,12 +13,18 @@ class AppConfig(object):
 
 
 class CayleyConfig(AppConfig):
-    pass
+    CAYLEY_HOST = os.environ.get('CAYLEY_HOST') or 'localhost'
+    CAYLEY_PORT = 64210
 
 
 class MongoDBConfig(AppConfig):
-    pass
+    MONGODB_HOST = os.environ.get('MONGODB_HOST') or 'localhost'
+    MONGODB_PORT = 27017
+
+
+class DevelopmentConfig(AppConfig):
+    DEBUG = True
 
 
 class TestingConfig(AppConfig):
-    pass
+    TESTING = True
