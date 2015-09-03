@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 
 import os
 
@@ -20,6 +21,10 @@ class CayleyConfig(AppConfig):
 class MongoDBConfig(AppConfig):
     MONGODB_HOST = os.environ.get('MONGODB_HOST') or 'localhost'
     MONGODB_PORT = 27017
+
+    DATABASE_NAME = 'cayley'
+    COLLECTION_QUADS = 'quads'
+    COLLECTION_NODES = 'nodes'
 
 
 class DevelopmentConfig(AppConfig):
