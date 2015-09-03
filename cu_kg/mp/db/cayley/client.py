@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import json
+import requests
 
 
 class CayleyClient(object):
@@ -11,7 +12,8 @@ class CayleyClient(object):
         self.delete_url = self.base_url + '/delete'
 
     def query(self, data):
-        pass
+        response = requests.post(self.query_url, data=str(data))
+        return response.status_code, response.json()
 
     def write(self, data):
         pass
@@ -20,27 +22,28 @@ class CayleyClient(object):
         pass
 
 
-class __CayleyGremlinQuery(object):
+class _CayleyGremlinQuery(object):
     def __init__(self):
         self.queryUnits = []
 
     def __str__(self):
         return '.'.join([str(q) for q in self.queryUnits])
 
-    def __append(self, method, *parameters):
+    def append(self, method, *parameters):
         if len(parameters) > 0:
             self.queryUnits.append(method % parameters)
         else:
             self.queryUnits.append(method)
 
 
-class __CayleyPath(__CayleyGremlinQuery):
-    def __init__(self):
-        pass
+class CayleyPath(_CayleyGremlinQuery):
+    def __init__(self, parent):
+        super(CayleyPath, self).__init__()
+        self.append(parent)
 
     def __format_value(self, value):
-        if value is None:
-            return 'null'
+        if value == 'null':
+            return value
         elif type(value) is str:
             return "'%s'" % value
         elif type(value) is dict:
@@ -48,25 +51,59 @@ class __CayleyPath(__CayleyGremlinQuery):
 
         return value
 
-    def __extend(self, method, predicate=None, tag=None):
-        if predicate is None and tag is None:
-            self.__append("%s()", method)
-        elif tag is None:
-            self.__append("%s(%s)", method, self.__format_value(predicate))
+    def __extend(self, method, predicate=None, tags=None):
+        if predicate is None and tags is None:
+            self.append("%s()", method)
+        elif tags is None:
+            self.append("%s(%s)", method, self.__format_value(predicate))
         else:
-            self.__append("%s(%s, %s)", method,
+            self.append("%s(%s, %s)", method,
                           self.__format_value(predicate),
-                          self.__format_value(tag))
+                          self.__format_value(tags))
         return self
 
-    def Out(self, predicate=None, tag=None):
-        self.__extend('Out', predicate, tag)
+    def Out(self, predicate=None, tags=None):
+        self.__extend('Out', predicate, tags)
         return self
 
-    def In(self, predicate=None, tag=None):
-        self.__extend('In', predicate, tag)
+    def In(self, predicate=None, tags=None):
+        self.__extend('In', predicate, tags)
         return self
 
-    def Both(self, predicate=None, tag=None):
-        self.__extend('Both', predicate, tag)
+    def Both(self, predicate=None, tags=None):
+        self.__extend('Both', predicate, tags)
         return self
+
+    def Tag(self, *tags):
+        self.append('Tag(%s)', json.dumps(tags))
+        return self
+
+    def All(self):
+        self.append('All()')
+        return self
+
+    def GetLimit(self, limit):
+        self.append('GetLimit(%s)', limit)
+        return self
+
+
+class CayleyGraphObject(object):
+    def V(self):
+        return CayleyPath('g.V()')
+
+    def M(self):
+        return CayleyPath('g.Morphism()')
+
+    def Vertex(self):
+        return self.V()
+
+    def Morphism(self):
+        return self.M()
+
+    def V(self, *nodes):
+        return CayleyPath("g.V({0:s})".format(
+            ",".join(["'%s'" % node for node in nodes])))
+
+    def Vertex(self, *nodes):
+        return self.V(nodes)
+
