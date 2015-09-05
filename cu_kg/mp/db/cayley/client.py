@@ -16,10 +16,12 @@ class CayleyClient(object):
         return response.status_code, response.json()
 
     def write(self, data):
-        pass
+        response = requests.post(self.write_url, data=str(data))
+        return response.status_code, response.json()
 
     def delete(self, data):
-        pass
+        response = requests.post(self.delete_url, data=str(data))
+        return response.status_code, response.json()
 
 
 class _CayleyGremlinQuery(object):
@@ -34,6 +36,34 @@ class _CayleyGremlinQuery(object):
             self.queryUnits.append(method % parameters)
         else:
             self.queryUnits.append(method)
+
+
+class CayleyDelete(object):
+    def __init__(self):
+        self.deleteQuads = []
+
+    def append(self, subject, predicate, object):
+        delete_dict = {"subject": "%s" % subject,
+                       "predicate": "%s" % predicate,
+                       "object": "%s" % object}
+        self.deleteQuads.append(delete_dict)
+
+    def __str__(self):
+        return json.dumps(self.deleteQuads)
+
+
+class CayleyWrite(object):
+    def __init__(self):
+        self.writeQuads = []
+
+    def append(self, subject, predicate, object):
+        write_dict = {"subject": "%s" % subject,
+                      "predicate": "%s" % predicate,
+                      "object": "%s" % object}
+        self.writeQuads.append(write_dict)
+
+    def __str__(self):
+        return json.dumps(self.writeQuads)
 
 
 class CayleyPath(_CayleyGremlinQuery):
@@ -106,4 +136,3 @@ class CayleyGraphObject(object):
 
     def Vertex(self, *nodes):
         return self.V(nodes)
-

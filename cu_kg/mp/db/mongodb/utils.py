@@ -34,12 +34,37 @@ def get_quads(subject, predicate, object):
     return result
 
 
-def update_quads(subject, predicate, object):
-    pass
+def update_quads(subject, predicate, object, **kwargs):
+    client, db = init_db_cayley()
+    quads = get_quads_collection(db)
+
+    attr_dict = {}
+    if LABEL in kwargs:
+        attr_dict[LABEL] = kwargs[LABEL]
+    if URLS in kwargs:
+        attr_dict[URLS] = kwargs[URLS]
+    if TIMESTAMP in kwargs:
+        attr_dict[TIMESTAMP] = kwargs[TIMESTAMP]
+
+    updated = False
+    if attr_dict:
+        result = quads.update({SUBJECT: subject,
+                               PREDICATE: predicate,
+                               OBJECT: object},
+                              {'$set': attr_dict})
+        updated = result['updatedExisting']
+
+    close_client(client)
+    return updated
 
 
 def delete_quads(subject, predicate, object):
-    pass
+    client, db = init_db_cayley()
+    quads = get_quads_collection(db)
+
+    result = quads.remove({SUBJECT: subject, PREDICATE: predicate,
+                           OBJECT: object})
+    return True if result['n'] else False
 
 
 def get_quads_count():
@@ -56,11 +81,3 @@ def get_nodes_count():
     count = nodes.find().count()
     close_client(client)
     return count
-
-
-if __name__ == '__main__':
-    pass
-
-
-
-
