@@ -1,13 +1,18 @@
 # -*- coding:utf-8 -*-
 
 from flask import Flask
+from flask.ext.bootstrap import Bootstrap
+
 from app.views.control_board import control_board
 from app.views.about import about
 
 app = Flask(__name__)
-app.register_blueprint(control_board)
+
+bootstrap = Bootstrap(app)
+
+app.register_blueprint(control_board, url_prefix='/cukg/control_board')
 app.register_blueprint(about)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

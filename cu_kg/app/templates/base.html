@@ -1,10 +1,72 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "bootstrap/base.html" %}
 
-</body>
-</html>
+{% block title %}CU-KG{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('control_board.static', filename='css/base.css') }}">
+{% endblock %}
+
+{% block navbar %}
+    <div class="container">
+        <div class="masthead">
+            <h3 class="text-muted">CU-KG</h3>
+            <nav>
+                <ul class="nav nav-justified">
+                    {% block home_active %}
+                    <li class="active">
+                    {% endblock %}
+                        <a href="#">
+                            <span class="glyphicon glyphicon-home"></span>&nbsp;
+                            首页
+                        </a>
+                    </li>
+                    {% block entity_base_active %}
+                    <li>
+                    {% endblock %}
+                        <a href="#">
+                            <span class="glyphicon glyphicon-hdd"></span>&nbsp;
+                            实体库
+                        </a>
+                    </li>
+                    {% block relation_search_active %}
+                    <li>
+                    {% endblock %}
+                        <a href="#">
+                            <span class="glyphicon glyphicon-search"></span>&nbsp;
+                            关系搜索
+                        </a>
+                    </li>
+                    {% block relation_model_active %}
+                    <li>
+                    {% endblock %}
+                        <a href="#">
+                            <span class="glyphicon glyphicon-tree-conifer"></span>&nbsp;
+                            关系建模
+                        </a>
+                    </li>
+                    {% block control_board_active %}
+                    <li>
+                    {% endblock %}
+                        <a href="/cukg/control_board">
+                            <span class="glyphicon glyphicon-cog"></span>&nbsp;
+                            控制台
+                        </a>
+                    </li>
+                    {% block about_active %}
+                    <li>
+                    {% endblock %}
+                        <a href="#">
+                            <span class="glyphicon glyphicon-info-sign"></span>&nbsp;
+                            关于
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+{% endblock %}
+
+{% block content %}
+    {% block page_content %}{% endblock %}
+    </div>
+{% endblock %}
