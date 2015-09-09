@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from cu_kg.config import MongoDBConfig
 from common import init_client, close_client, get_database, get_collection

@@ -1,0 +1,16 @@
+.marketing .col-lg-4 {
+  margin-bottom: 20px;
+  text-align: center;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.marketing h2 {
+  margin-top: 30px;
+  font-weight: normal;
+}
+
+.marketing .col-lg-4 p {
+  margin: 20px 10px 20px 10px;
+  font-weight: bold;
+}

@@ -1,4 +1,4 @@
-# -*- coding:utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from cu_kg.mp.db.cayley.client import CayleyClient, CayleyGraphObject
 
