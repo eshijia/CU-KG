@@ -27,6 +27,11 @@ class MongoDBConfig(AppConfig):
     COLLECTION_NODES = 'nodes'
 
 
+class SQLAlchemyConfig(AppConfig):
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/cukg'
+    SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+
+
 class DevelopmentConfig(AppConfig):
     DEBUG = True
 
