@@ -4,13 +4,24 @@
 
 {% block styles %}
     {{ super() }}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('control_board.static', filename='css/base.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('home.static', filename='css/base.css') }}">
 {% endblock %}
 
 {% block navbar %}
     <div class="container">
         <div class="masthead">
-            <h3 class="text-muted">CU-KG</h3>
+            <div class="headers">
+                <h3 class="text-muted">CU-KG</h3>
+                <div class="btn-group actions" role="group">
+                    {% if current_user.is_authenticated() %}
+                    <a class="btn btn-success" href="#">{{ current_user.username }} 的用户空间</a>
+                    <a class="btn btn-default" href="{{ url_for('auth.logout') }}">注销</a>
+                    {% else %}
+                    <a class="btn btn-success" href="{{ url_for('auth.login') }}">登录</a>
+                    <a class="btn btn-default">注册</a>
+                    {% endif %}
+                </div>
+            </div>
             <nav>
                 <ul class="nav nav-justified">
                     {% block home_active %}

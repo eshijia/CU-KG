@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from flask.ext.login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from cu_kg.manage import db
+from cu_kg.app import db
 
 
-class User(UserMixin, db.Model):
+class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -25,6 +24,24 @@ class User(UserMixin, db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return unicode(self.id)
+
+    def is_admin(self):
+        return self.role_id == 1
+
+    def __repr__(self):
+        return '<User %r>' % (self.username)
+
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -33,3 +50,5 @@ class Role(db.Model):
     name = db.Column(db.String(64), unique=True)
 
     users = db.relationship('User', backref='role', lazy='dynamic')
+
+

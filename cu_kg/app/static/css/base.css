@@ -1,5 +1,5 @@
 body {
-    padding-top: 20px;
+    margin-top: 20px;
 }
 
 /* Customize the nav-justified links to be fill the entire space of the .navbar */
@@ -9,6 +9,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 60px;
+  margin-top: 20px;
 }
 
 .nav-justified > li > a {
@@ -69,4 +70,13 @@ body {
         padding-left: 0;
         padding-right: 0;
     }
+}
+
+.headers h3 {
+    display: inline;
+}
+
+.headers .actions {
+    display: inline;
+    float: right;
 }
