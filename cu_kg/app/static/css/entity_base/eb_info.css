@@ -1,0 +1,23 @@
+.entity hr {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.entity-header h2 {
+    margin-top: 20px;
+}
+
+.entity .panel {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.entity .panel a {
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+#graph-container {
+    width: 100%;
+    height: 600px;
+}

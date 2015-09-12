@@ -30,6 +30,9 @@ def create_app():
     login_manager.user_loader(load_user)
     app.register_blueprint(auth, url_prefix='/cukg/auth')
 
+    from views.entity_base import entity_base
+    app.register_blueprint(entity_base, url_prefix='/cukg/entity_base')
+
     from views.control_board import control_board
     app.register_blueprint(control_board, url_prefix='/cukg/control_board')
 

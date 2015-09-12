@@ -27,7 +27,7 @@
                     {% block home_active %}
                     <li class="active">
                     {% endblock %}
-                        <a href="#">
+                        <a href="{{ url_for('home.index') }}">
                             <span class="glyphicon glyphicon-home"></span>&nbsp;
                             首页
                         </a>
@@ -35,7 +35,7 @@
                     {% block entity_base_active %}
                     <li>
                     {% endblock %}
-                        <a href="#">
+                        <a href="{{ url_for('entity_base.eb_base') }}">
                             <span class="glyphicon glyphicon-hdd"></span>&nbsp;
                             实体库
                         </a>
@@ -59,7 +59,7 @@
                     {% block control_board_active %}
                     <li>
                     {% endblock %}
-                        <a href="/cukg/control_board">
+                        <a href="{{ url_for('control_board.cb_base') }}">
                             <span class="glyphicon glyphicon-cog"></span>&nbsp;
                             控制台
                         </a>
