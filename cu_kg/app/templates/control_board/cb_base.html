@@ -22,7 +22,7 @@
                 <img class="img-circle" src="{{ url_for('control_board.static', filename='images/control_board/classify_relation.png') }}" alt="{{ classify_name }} Image" width="140" height="140">
                 <h2>{{ classify_name }}</h2>
                 <p>{{ classify_description }}</p>
-                <p><a class="btn btn-default" href="#" role="button">View Details &raquo;</a></p>
+                <p><a class="btn btn-default" href="{{ url_for('control_board.classify_quads') }}" role="button">View Details &raquo;</a></p>
             </div>
             <div class="col-lg-4">
                 <img class="img-circle" src="{{ url_for('control_board.static', filename='images/control_board/attribute_relation.png') }}" alt="{{ attribute_name }} Image" width="140" height="140">

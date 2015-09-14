@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, render_template
+import json
+
+from flask import Blueprint, render_template, request, redirect, url_for
+
+from cu_kg.mp.db.mongodb.datatables import DataTablesServer
+from cu_kg.mp.db.mongodb.utils import delete_quads as delete_quads_mongodb
+from cu_kg.mp.db.cayley.utils import write_quad
 
 control_board = Blueprint('control_board', __name__,
                           template_folder='../templates',
@@ -23,17 +29,41 @@ def cb_base():
     return render_template('control_board/cb_base.html', **locals())
 
 
-@control_board.route('/classify_quads')
+@control_board.route('/cb_classify')
 def classify_quads():
-    pass
+    return render_template('control_board/cb_classify.html')
 
 
-@control_board.route('/attribute_quads')
+@control_board.route('/classify_quads')
+def get_classify_quads():
+    return get_quads(request, 0)
+
+
+@control_board.route('/cb_attribute')
 def attribute_quads():
-    pass
+    return get_quads(request, 1)
 
 
-@control_board.route('/common_quads')
+@control_board.route('/cb_common')
 def common_quads():
-    pass
+    return get_quads(request, 2)
 
+
+def get_quads(request, type):
+    results = DataTablesServer(request, type).result()
+    return json.dumps(results)
+
+
+@control_board.route('/delete_quads')
+def delete_quads():
+    temp_subject = request.args.get('subject')
+    temp_predicate = request.args.get('predicate')
+    temp_object = request.args.get('object')
+
+    result = delete_quads_mongodb(temp_subject, temp_predicate, temp_object)
+    return json.dumps({"result": result})
+
+
+@control_board.route('/add_quads')
+def add_quads():
+    result = write_quad()
