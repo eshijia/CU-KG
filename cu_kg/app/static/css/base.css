@@ -1,5 +1,11 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     margin-top: 20px;
+    margin-bottom: 60px;
 }
 
 /* Customize the nav-justified links to be fill the entire space of the .navbar */
@@ -71,11 +77,25 @@ body {
     }
 }
 
-.headers h3 {
+.headers h2 {
     display: inline;
 }
 
 .headers .actions {
     display: inline;
     float: right;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.container .text-muted {
+  margin: 10px 0;
 }

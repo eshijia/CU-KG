@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}首页{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('home.static', filename='css/home/home.css') }}">
+{% endblock %}
+
+{% block page_content %}
+    <div class="container home-body">
+        <div class="intro jumbotron">
+            <h2 class="body-head">{{ body_head }}</h2>
+            <p><span class="content-head">{{ content_head }}</span>{{ content_body }}</p>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-6 counts">
+                <section class="instance">
+                    <span>
+                        <h2 id="instances">
+                            {{ instances }}
+                        </h2>
+                    </span>
+                </section>
+                <strong>Instances</strong>
+            </div>
+            <div class="col-md-6 counts">
+                <section class="relation">
+                    <span>
+                        <h2 id="relations">
+                            {{ relations }}
+                        </h2>
+                    </span>
+                </section>
+                <strong>Relations</strong>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('home.static', filename='js/home/home.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+           setInterval(getCount, 1000);
+        });
+
+        function getCount() {
+            $.ajax({
+                type: 'POST',
+                url: "{{ url_for('home.get_count') }}",
+                success: function(data) {
+                    count = $.parseJSON(data);
+                    console.log(data);
+                    $('#instances')[0].innerHTML = count.nodes;
+                    $('#relations')[0].innerHTML = count.quads;
+                }
+            });
+        }
+    </script>
+{% endblock %}

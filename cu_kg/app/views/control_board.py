@@ -3,6 +3,7 @@
 import json
 
 from flask import Blueprint, render_template, request, redirect, url_for
+from flask.ext.login import login_required
 
 from cu_kg.mp.db.mongodb.datatables import DataTablesServer
 from cu_kg.mp.db.mongodb.utils import delete_quads as delete_quads_mongodb
@@ -31,6 +32,7 @@ def cb_base():
 
 
 @control_board.route('/cb_classify')
+@login_required
 def classify_quads():
     return render_template('control_board/cb_classify.html')
 
@@ -41,6 +43,7 @@ def get_classify_quads():
 
 
 @control_board.route('/cb_attribute')
+@login_required
 def attribute_quads():
     return render_template('control_board/cb_attribute.html')
 
@@ -51,6 +54,7 @@ def get_attribute_quads():
 
 
 @control_board.route('/cb_common')
+@login_required
 def common_quads():
     return render_template('control_board/cb_common.html')
 

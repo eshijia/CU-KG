@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint, render_template, redirect, request, url_for
-from flask.ext.login import login_user, logout_user
+from flask.ext.login import login_user, logout_user, login_required
 
 from cu_kg.app.forms.auth import LoginForm
 from cu_kg.app.models.user import User
@@ -24,6 +24,7 @@ def login():
 
 
 @auth.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('home.index'))

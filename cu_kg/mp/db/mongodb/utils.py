@@ -129,4 +129,4 @@ def get_paths_between_two_entity(entity1, entity2, level):
 
 
 def find_all_paths(start, end, level, paths=[]):
-
+    pass

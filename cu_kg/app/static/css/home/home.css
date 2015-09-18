@@ -1,0 +1,36 @@
+.intro {
+    margin-top: 20px;
+}
+
+.intro .body-head {
+    margin-bottom: 15px;
+}
+
+.intro .content-head {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.intro p {
+    text-indent: 2em;
+}
+
+.counts {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+section.instance h2 {
+	color: #335da8;
+    font-size: 40px;
+}
+
+section.relation h2 {
+	color: #b92d29;
+    font-size: 40px;
+}
+
+strong {
+	font-weight: bold;
+    font-size: 25px;
+}

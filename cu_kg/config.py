@@ -6,6 +6,7 @@ import os
 class AppConfig(object):
     DEBUG = False
     TESTING = False
+
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'jiu bu gao su ni'
 
 
