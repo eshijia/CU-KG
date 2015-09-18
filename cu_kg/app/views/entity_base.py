@@ -2,9 +2,10 @@
 
 import json
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
 from cu_kg.mp.db.cayley.utils import get_direct_relation
+from cu_kg.mp.db.mongodb.utils import search_entity_by_name
 
 entity_base = Blueprint('entity_base', __name__,
                         template_folder='../templates',
@@ -14,6 +15,13 @@ entity_base = Blueprint('entity_base', __name__,
 @entity_base.route('/')
 def eb_base():
     return render_template('entity_base/eb_base.html')
+
+
+@entity_base.route('/search', methods=['POST'])
+def search_by_name():
+    entity_name = request.form.get('name')
+    entity_desc_list = search_entity_by_name(entity_name)
+    return json.dumps({"result": entity_desc_list})
 
 
 @entity_base.route('/<entity_name>')

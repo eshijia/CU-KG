@@ -54,6 +54,10 @@ class DataTablesServer(object):
 
         if self.type == 0:
             _filter['predicate'] = {'$in': ['is-a', 'instance-of']}
+        elif self.type == 1:
+            _filter['predicate'] = {'$regex': '^attribute:'}
+        elif self.type == 2:
+            _filter['predicate'] = {'$regex': '^(?!is-a)(?!instance-of)(?!attribute:)'}
 
         return _filter
 
@@ -104,6 +108,12 @@ class DataTablesServer(object):
             data_row = {}
             for i in range(len(self.columns)):
                 data_row[self.columns[i]] = row[self.columns[i]].replace('"', '\\"')
+
+            if 'timestamp' in row:
+                data_row['timestamp'] = row['timestamp']
+            else:
+                data_row['timestamp'] = ''
+
             data_row['id'] = self.columns[0] + "=" + data_row[self.columns[0]] + \
                              "&" + self.columns[1] + "=" + data_row[self.columns[1]] + \
                              "&" + self.columns[2] + "=" + data_row[self.columns[2]]

@@ -22,7 +22,7 @@ def write_quad(subject, predicate, object):
     client = CayleyClient()
     g = CayleyWrite()
     g.append(subject, predicate, object)
-    status_code, result = client.delete(g)
+    status_code, result = client.write(g)
     if status_code == 200:
         return True
     return False

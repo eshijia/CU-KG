@@ -14,3 +14,78 @@
 {% block entity_base_active %}
     <li class="active">
 {% endblock %}
+
+{% block page_content %}
+    <div class="container search">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-1">
+                    <input type="text" class="form-control" placeholder="实体名" id="entityName" />
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control" id="entityType">
+                        <option>文本</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-success" id="searchBtn">搜索一下</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultDiv">
+            <table class="table table-bordered" id="resultTable" align="center"></table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('entity_base.static', filename='js/entity_base/eb_base.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+           $('#searchBtn').click(searchEntity);
+        });
+
+        function searchEntity() {
+            var entityName = $('#entityName')[0].value;
+            if (entityName == '') {
+                alert('请输入实体名!');
+                return;
+            }
+
+            var entityType = $('#entityType')[0].value;
+            if (entityType == '文本') {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ url_for('entity_base.search_by_name') }}",
+                    data: {'name': entityName},
+                    success: function(data) {
+                        result = $.parseJSON(data).result;
+                        if (result == null) {
+                            alert('暂无相关实体!');
+                        } else {
+                            $('#resultTable')[0].innerHTML = '';
+                            $('#resultTable')[0].innerHTML += '<tr><td style="text-align: center;">实体名</td><td style="text-align: center;">描述</td></tr>';
+                            for (var i = 0; i < result.length; i++) {
+                                var name = result[i].name;
+                                var description = result[i].description;
+                                
+                                nameA = "<a href=\"{{ url_for('entity_base.eb_base') }}" + name + "\">" + name + "</a>";
+                                if (description != '') {
+                                    $('#resultTable')[0].innerHTML += '<tr><td class="td1">' + nameA + '</td><td class="td2">' + description + '</td></tr>';
+                                }
+                                else {
+                                    $('#resultTable')[0].innerHTML += '<tr><td class="td1">' + nameA + '</td><td class="td2">暂无该实体的描述</td></tr>';
+                                }
+                            }
+                        }
+                    }
+                })
+            } else if (entityType == '图片')  {
+
+            }
+        }
+    </script>
+{% endblock %}

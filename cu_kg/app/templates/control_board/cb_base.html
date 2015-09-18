@@ -28,13 +28,13 @@
                 <img class="img-circle" src="{{ url_for('control_board.static', filename='images/control_board/attribute_relation.png') }}" alt="{{ attribute_name }} Image" width="140" height="140">
                 <h2>{{ attribute_name }}</h2>
                 <p>{{ attribute_description }}</p>
-                <p><a class="btn btn-default" href="#" role="button">View Details &raquo;</a></p>
+                <p><a class="btn btn-default" href="{{ url_for('control_board.attribute_quads') }}" role="button">View Details &raquo;</a></p>
             </div>
             <div class="col-lg-4">
                 <img class="img-circle" src="{{ url_for('control_board.static', filename='images/control_board/common_relation.png') }}" alt="{{ common_name }} Image" width="140" height="140">
                 <h2>{{ common_name }}</h2>
                 <p>{{ common_description }}</p>
-                <p><a class="btn btn-default" href="#" role="button">View Details &raquo;</a></p>
+                <p><a class="btn btn-default" href="{{ url_for('control_board.common_quads') }}" role="button">View Details &raquo;</a></p>
             </div>
         </div>
     </div>

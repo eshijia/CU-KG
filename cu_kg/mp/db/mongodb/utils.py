@@ -69,8 +69,8 @@ def delete_quads(subject, predicate, object):
 
 def get_quads_count():
     client, db = init_db_cayley()
-    nodes = get_nodes_collection(db)
-    count = nodes.find().count()
+    quads = get_quads_collection(db)
+    count = quads.find().count()
     close_client(client)
     return count
 
@@ -81,3 +81,52 @@ def get_nodes_count():
     count = nodes.find().count()
     close_client(client)
     return count
+
+
+def get_object_value(subject, predicate):
+    client, db = init_db_cayley()
+    quads = get_quads_collection(db)
+
+    result = quads.find_one({'subject': subject, 'predicate': predicate})
+    if result:
+        return result['object']
+    return None
+
+
+def search_entity_by_name(name):
+    client, db = init_db_cayley()
+    nodes = get_nodes_collection(db)
+    quads = get_quads_collection(db)
+
+    entities = list(nodes.find({'Name': {'$regex': name, '$options': 'i'}}))
+    if entities:
+        entity_desc_list = []
+
+        for entity in entities:
+            entity_name = entity['Name']
+            description_quad = quads.find_one({
+                'subject': entity_name,
+                'predicate': 'attribute:description'
+            })
+            if description_quad:
+                entity_desc_list.append({
+                    'name': entity_name,
+                    'description': description_quad['object']
+                })
+            else:
+                entity_desc_list.append({
+                    'name': entity_name,
+                    'description': ''
+                })
+
+        return entity_desc_list
+
+    return None
+
+
+def get_paths_between_two_entity(entity1, entity2, level):
+    pass
+
+
+def find_all_paths(start, end, level, paths=[]):
+

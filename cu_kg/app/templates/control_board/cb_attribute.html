@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}分类关系控制台{% endblock %}
+{% block title %}属性关系控制台{% endblock %}
 
 {% block styles %}
     {{ super() }}
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.9/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('control_board.static', filename='bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('control_board.static', filename='css/control_board/cb_classify.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('control_board.static', filename='css/control_board/cb_attribute.css') }}">
 {% endblock %}
 
 {% block home_active %}
@@ -100,7 +100,7 @@
             "bProcessing": true,
             "bServerSide": true,
             "sPaginationType": "full_numbers",
-            "sAjaxSource": "{{ url_for('control_board.get_classify_quads') }}",
+            "sAjaxSource": "{{ url_for('control_board.get_attribute_quads') }}",
             "processing": true,
             "oLanguage": {  //语言设置
                 "sLengthMenu": "每页显示 _MENU_ 条记录",

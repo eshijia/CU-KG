@@ -6,6 +6,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 
 from cu_kg.mp.db.mongodb.datatables import DataTablesServer
 from cu_kg.mp.db.mongodb.utils import delete_quads as delete_quads_mongodb
+from cu_kg.mp.db.mongodb.utils import update_quads
 from cu_kg.mp.db.cayley.utils import write_quad
 
 control_board = Blueprint('control_board', __name__,
@@ -41,11 +42,21 @@ def get_classify_quads():
 
 @control_board.route('/cb_attribute')
 def attribute_quads():
+    return render_template('control_board/cb_attribute.html')
+
+
+@control_board.route('/attribute_quads')
+def get_attribute_quads():
     return get_quads(request, 1)
 
 
 @control_board.route('/cb_common')
 def common_quads():
+    return render_template('control_board/cb_common.html')
+
+
+@control_board.route('/common_quads')
+def get_common_quads():
     return get_quads(request, 2)
 
 
@@ -64,6 +75,29 @@ def delete_quads():
     return json.dumps({"result": result})
 
 
-@control_board.route('/add_quads')
+@control_board.route('/add_quads', methods=['POST'])
 def add_quads():
-    result = write_quad()
+    temp_subject = request.form.get('subject')
+    temp_predicate = request.form.get('predicate')
+    temp_object = request.form.get('object')
+    temp_time = request.form.get('time')
+
+    # add quads by cayley and then edit attributes by mongodb
+    result1 = write_quad(temp_subject, temp_predicate, temp_object)
+    result2 = update_quads(temp_subject, temp_predicate, temp_object,
+                           timestamp=temp_time)
+
+    return json.dumps({"result": result1 and result2})
+
+
+@control_board.route('/edit_quads', methods=['POST'])
+def edit_quads():
+    temp_subject = request.form.get('subject')
+    temp_predicate = request.form.get('predicate')
+    temp_object = request.form.get('object')
+    temp_time = request.form.get('time')
+
+    result = update_quads(temp_subject, temp_predicate, temp_object,
+                          timestamp=temp_time)
+    return json.dumps({"result": result})
+
