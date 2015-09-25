@@ -14,7 +14,7 @@
                 <img src="{{ url_for('home.static', filename='images/head.png') }}">
                 <h2 class="text-muted"><sup>V0.2</sup></h2>
                 <div class="btn-group actions" role="group">
-                    {% if current_user.is_authenticated() %}
+                    {% if current_user.is_authenticated %}
                     <a class="btn btn-success" href="#">{{ current_user.username }} 的用户空间</a>
                     <a class="btn btn-default" href="{{ url_for('auth.logout') }}">注销</a>
                     {% else %}
@@ -52,7 +52,7 @@
                     {% block relation_model_active %}
                     <li>
                     {% endblock %}
-                        <a href="#">
+                        <a href="{{ url_for('relation_model.rm_base') }}">
                             <span class="glyphicon glyphicon-tree-conifer"></span>&nbsp;
                             关系建模
                         </a>

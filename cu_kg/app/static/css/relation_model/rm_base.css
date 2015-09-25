@@ -1,0 +1,37 @@
+.relation-model {
+    margin-top: 20px;
+}
+
+.upload {
+    width: 50%;
+}
+
+.graph-hint {
+    float: right;
+}
+
+.graph-hint {
+    margin-bottom: 20px;
+}
+
+.graph-hint .hint {
+    width: 30px;
+    border: 4px solid;
+    border-radius: 3px;
+}
+
+.graph-hint #xian_hint {
+    border-color: #9932cc;
+}
+
+.graph-hint #ying_hint {
+    border-color: #335da8;
+}
+
+.graph-container {
+    clear: both;
+    width: 100%;
+    height: 600px;
+    border-radius: 5px;
+    border: 1px lightgrey solid;
+}

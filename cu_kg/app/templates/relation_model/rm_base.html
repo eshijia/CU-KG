@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}关系建模{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('relation_model.static', filename='css/relation_model/rm_base.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('relation_model.static', filename='bootstrap-fileinput/css/fileinput.min.css') }}">
+{% endblock %}
+
+{% block home_active %}
+    <li>
+{% endblock %}
+
+{% block relation_model_active %}
+    <li class="active">
+{% endblock %}
+
+{% block page_content %}
+    <div class="container relation-model">
+        <div class="upload">
+            <form enctype="multipart/form-data" method="POST" action="{{ url_for('relation_model.rm_base') }}">
+                <label for="relation_file">导入TXT文件</label>
+                <input id="relation_file" type="file" name="file">
+            </form>
+        </div>
+        <hr />
+        <div class="graph">
+            <div class="graph-hint">
+                <label><hr class="hint" id="xian_hint"><span>显式关系</span></label>
+                &nbsp;&nbsp;&nbsp;
+                <label><hr class="hint" id="ying_hint"><span>隐式关系</span></label>
+            </div>
+            <div class="graph-container"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('relation_model.static', filename='bootstrap-fileinput/js/fileinput.min.js') }}"></script>
+    <script src="{{ url_for('relation_model.static', filename='bootstrap-fileinput/js/fileinput_locale_zh.js') }}"></script>
+
+    <script>
+        $("#relation_file").fileinput({
+	        allowedFileExtensions : ['txt'],
+            maxFileCount: 1
+		});
+    </script>
+{% endblock %}

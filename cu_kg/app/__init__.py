@@ -37,7 +37,10 @@ def create_app():
     app.register_blueprint(control_board, url_prefix='/cukg/control_board')
 
     from views.relation_search import relation_search
-    app.register_blueprint(relation_search, url_predix='/cukg/relation_search')
+    app.register_blueprint(relation_search, url_prefix='/cukg/relation_search')
+
+    from views.relation_model import relation_model
+    app.register_blueprint(relation_model, url_prefix='/cukg/relation_model')
 
     from views.about import about
     app.register_blueprint(about, url_prefix='/cukg/about')
