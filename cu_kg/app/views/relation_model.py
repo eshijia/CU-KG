@@ -17,9 +17,8 @@ def rm_base():
         file = request.files['file']
         if file:
             result = hehe()
-            print result
-            render_template('relation_model/rm_base.html', result=result)
-    return render_template('relation_model/rm_base.html', result=None)
+            return render_template('relation_model/rm_base.html', data=result)
+    return render_template('relation_model/rm_base.html', data=None)
 
 
 def hehe():
@@ -42,7 +41,9 @@ def hehe():
     for e in entities:
         status, ying_triples = get_direct_relation(e)
         if status:
-            for triple in ying_triples:
+            for triple in ying_triples['result']:
+                if triple['predicate'].startswith('description'):
+                    continue
                 relations.append({
                     'subject': triple['subject'],
                     'predicate': triple['predicate'],
@@ -50,7 +51,7 @@ def hehe():
                     'flag': 1
                 })
 
-    return json.dumps({'result': relations})
+    return {'result': relations}
 
 
 
