@@ -10,4 +10,3 @@ relation_search = Blueprint('relation_search', __name__,
 @relation_search.route('/')
 def rs_base():
     return render_template('relation_search/rs_base.html')
-

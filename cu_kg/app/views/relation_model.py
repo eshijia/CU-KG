@@ -42,7 +42,7 @@ def hehe():
         status, ying_triples = get_direct_relation(e)
         if status:
             for triple in ying_triples['result']:
-                if triple['predicate'].startswith('description'):
+                if triple['predicate'].startswith('attribute'):
                     continue
                 relations.append({
                     'subject': triple['subject'],

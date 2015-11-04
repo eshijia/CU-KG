@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from cu_kg.config import MongoDBConfig
+from cu_kg.mp.db.cayley.utils import get_direct_relation
 from common import init_client, close_client, get_database, get_collection
 
 QUADS_FIELD = (
@@ -125,8 +126,44 @@ def search_entity_by_name(name):
 
 
 def get_paths_between_two_entity(entity1, entity2, level):
+    return find_all_paths(entity1, entity2, level)
+
+
+def find_all_paths(start, end, level, paths=[], entities=[], relation=None):
+    if level < 0:
+        return []
+
+    # if use append, entities will change internally
+    # if use +, a new entities will be created
+    entities = entities + [start]
+
+    if relation is not None:
+        paths = paths + [relation]
+
+    if start == end:
+        return [paths]
+
+    status, relations_from_start = get_direct_relation(start.encode('UTF-8'))
+
+    if (not status) or (relations_from_start is None):
+        return []
+
+    level -= 1
+    all_paths = []
+
+    for r in relations_from_start['result']:
+        if (r['object'] not in entities) and \
+                (not r['predicate'].startswith('attribute')):
+            temp_paths = find_all_paths(r['object'], end, level,
+                                        paths, entities, r)
+            for temp_path in temp_paths:
+                if temp_path not in all_paths:
+                    all_paths.append(temp_path)
+
+    return all_paths
+
+
+if __name__ == '__main__':
     pass
 
 
-def find_all_paths(start, end, level, paths=[]):
-    pass
