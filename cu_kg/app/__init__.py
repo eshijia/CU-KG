@@ -4,11 +4,13 @@ from flask import Flask
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
+from flask_migrate import Migrate
 
 from cu_kg.config import init_app_config
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
+migrate = Migrate()
 
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
@@ -21,6 +23,7 @@ def create_app():
 
     bootstrap.init_app(app)
     db.init_app(app)
+    migrate.init_app(app, db)
     login_manager.init_app(app)
 
     from views.home import home

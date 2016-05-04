@@ -19,7 +19,7 @@
                     <a class="btn btn-default" href="{{ url_for('auth.logout') }}">注销</a>
                     {% else %}
                     <a class="btn btn-success" href="{{ url_for('auth.login') }}">登录</a>
-                    <a class="btn btn-default">注册</a>
+                    <a class="btn btn-default" href="{{ url_for('auth.register') }}">注册</a>
                     {% endif %}
                 </div>
             </div>

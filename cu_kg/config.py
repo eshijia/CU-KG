@@ -7,7 +7,7 @@ class AppConfig(object):
     DEBUG = False
     TESTING = False
 
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'jiu bu gao su ni'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret'
 
 
 class CayleyConfig(object):
@@ -25,7 +25,7 @@ class MongoDBConfig(object):
 
 
 class SQLAlchemyConfig(object):
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:@localhost:3306/cukg'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:111111@localhost:3306/cukg'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 
 
